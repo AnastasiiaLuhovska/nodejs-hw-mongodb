@@ -1,6 +1,6 @@
 import 'dotenv/config'
-import {startServer} from "./server";
-import {initMongoDBConnection} from "./db/initMongoDBConnection";
+import {startServer} from "./src/server";
+import {initMongoDBConnection} from "./src/db/initMongoDBConnection";
 
 const bootstrap = async() => {
     await initMongoDBConnection()
