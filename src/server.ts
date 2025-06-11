@@ -1,8 +1,8 @@
 import express,  { Request, Response }  from 'express'
 import cors from 'cors'
 import {CustomError} from "./types/types";
-import ContactCollection from "./db/models/model";
 import {getContacts, getContactsById} from "./services/contacts";
+import {getEnvVar} from "./utils/getEnvVar";
 
 export const startServer = () =>{
     const app = express()
@@ -67,6 +67,7 @@ export const startServer = () =>{
         })
     })
 
+    const port = Number(getEnvVar("PORT", 3000))
 
-    app.listen(3000, ()=> {console.log('server is working')})
+    app.listen(port, ()=> {console.log('server is working')})
     }
