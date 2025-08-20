@@ -1,3 +1,6 @@
+import {NextFunction, Request, Response} from "express";
+import {Types} from "mongoose";
+
 export interface CustomError extends Error {
     status?: number;
     statusCode?: number;
@@ -21,4 +24,14 @@ export interface GetContacts {
 
 export interface GetContactsById {
     (contactId:string):Promise<IContact>
+}
+export interface AsyncController{
+    (req:Request, res:Response, next:NextFunction): Promise<void>
+}
+export interface Contact extends IContact{
+    _id: Types.ObjectId
+}
+
+export interface PostContact{
+    (IContact): Promise<Contact>
 }
