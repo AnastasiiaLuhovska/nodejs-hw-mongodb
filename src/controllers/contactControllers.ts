@@ -41,9 +41,8 @@ export const deleteContactController = async(req, res, next) => {
             return
         }
         res.json({
-            status: 200,
+            status: 204,
             message: 'Contact was successfully deleted',
-            data
         })
 };
 
