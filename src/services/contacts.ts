@@ -1,5 +1,6 @@
 import ContactCollection from "../db/models/model";
 import {GetContacts, GetContactsById, PostContact} from "../types/types";
+import {calculatePaginationData} from "../utils/calculatePaginationData";
 
 export const getContactsById:GetContactsById = async(contactId) => {
     const data = await ContactCollection.findById(contactId)
@@ -7,9 +8,17 @@ export const getContactsById:GetContactsById = async(contactId) => {
 
 }
 
-export const getContacts:GetContacts = async() => {
-    const data = await ContactCollection.find()
-    return data
+export const getContacts:GetContacts = async({parsedPage, parsedPerPage}) => {
+    const skip = (parsedPage - 1)*parsedPerPage
+    const contactQuery = ContactCollection.find()
+    const contactCount = await ContactCollection.find().merge(contactQuery).countDocuments()
+
+    const paginationData = calculatePaginationData(contactCount, parsedPage, parsedPerPage)
+
+    const data = await contactQuery.find().limit(parsedPerPage).skip(skip)
+
+    return {data,
+        ...paginationData}
 
 }
 
