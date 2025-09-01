@@ -24,7 +24,7 @@ export const getContactBytIdController:AsyncController = async(req, res, next)=>
     })
 }
 
-export const postContactController = async(req, res, next) => {
+export const postContactController:AsyncController = async(req, res, next) => {
         const data = await postContact(req.body)
         res.status(201).json({
             status: 201,
@@ -33,7 +33,7 @@ export const postContactController = async(req, res, next) => {
 
         })
 };
-export const deleteContactController = async(req, res, next) => {
+export const deleteContactController:AsyncController = async(req, res, next) => {
         const data = await deleteContact(req.params.contactId)
 
         if(!data){
@@ -46,7 +46,7 @@ export const deleteContactController = async(req, res, next) => {
         })
 };
 
-export const patchContactController = async(req, res, next) => {
+export const patchContactController:AsyncController = async(req, res, next) => {
     const data = await updateContact(req.params.contactId, req.body)
     if(!data){
         next(createHttpError(404, 'Contact was not found'))
