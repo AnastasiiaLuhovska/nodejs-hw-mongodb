@@ -1,4 +1,4 @@
-const parseNumber = (number:any, defaultValue: number):number=> {
+export const parseNumber = (number:any, defaultValue: number):number=> {
     if (typeof number !== 'string') return defaultValue
     const parsedNumber = parseInt(number)
     if (Number.isNaN(parsedNumber)) return defaultValue

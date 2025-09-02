@@ -3,11 +3,14 @@ import {AsyncController} from "../types/types";
 import createHttpError from "http-errors";
 import {parsePaginationParams} from "../utils/parsePaginationParams";
 import {parseSortParams} from "../utils/parseSortParams";
+import {parseFilterParams} from "../utils/parseFilterByType";
 
 export const getContactController: AsyncController = async (req, res, next) => {
     const {parsedPage, parsedPerPage} = parsePaginationParams(req.query)
     const {parsedSortBy, parsedSortOrder} = parseSortParams(req.query)
-    const data = await getContacts({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder})
+    const filters = parseFilterParams(req.query)
+
+    const data = await getContacts({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder, filters})
     res.json({
         status: 200,
         message: "Contact were found successfully",

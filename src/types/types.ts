@@ -28,7 +28,11 @@ interface getContactsProps{
     parsedPage: number,
     parsedPerPage:number,
     parsedSortOrder: 'asc' | 'desc',
-    parsedSortBy: string
+    parsedSortBy: string,
+    filters: {
+        [x: string]: number|boolean|string
+    }
+
 }
 interface PaginationData {
     totalPages: number
