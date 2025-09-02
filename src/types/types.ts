@@ -18,18 +18,17 @@ export interface IContact {
     contactType: 'personal' | 'home'| 'work';
 }
 
-export interface ReceivedContact {
-    _id: Types.ObjectId
-    name: string;
-    phoneNumber: string;
-    email?: string;
-    isFavourite?: boolean;
-    contactType: 'personal' | 'home'| 'work';
+export interface IContactWithTimestamps extends IContact {
+    createdAt: Date;
+    updatedAt: Date;
+    _id: Types.ObjectId;
 }
 
 interface getContactsProps{
     parsedPage: number,
-    parsedPerPage:number
+    parsedPerPage:number,
+    parsedSortOrder: 'asc' | 'desc',
+    parsedSortBy: string
 }
 interface PaginationData {
     totalPages: number
@@ -41,7 +40,7 @@ interface PaginationData {
 }
 
 interface ContactsResponse extends PaginationData {
-    data: ReceivedContact[];
+    data: IContactWithTimestamps[];
 }
 export interface GetContacts {
     (query:getContactsProps):Promise<ContactsResponse>

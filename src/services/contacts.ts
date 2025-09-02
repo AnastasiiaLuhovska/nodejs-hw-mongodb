@@ -8,14 +8,15 @@ export const getContactsById:GetContactsById = async(contactId) => {
 
 }
 
-export const getContacts:GetContacts = async({parsedPage, parsedPerPage}) => {
+export const getContacts:GetContacts = async({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder}) => {
     const skip = (parsedPage - 1)*parsedPerPage
     const contactQuery = ContactCollection.find()
     const contactCount = await ContactCollection.find().merge(contactQuery).countDocuments()
 
     const paginationData = calculatePaginationData(contactCount, parsedPage, parsedPerPage)
 
-    const data = await contactQuery.find().limit(parsedPerPage).skip(skip)
+
+    const data = await contactQuery.limit(parsedPerPage).skip(skip).sort({[parsedSortBy]:parsedSortOrder}).exec()
 
     return {data,
         ...paginationData}

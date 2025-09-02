@@ -2,11 +2,12 @@ import {deleteContact, getContacts, getContactsById, postContact, updateContact}
 import {AsyncController} from "../types/types";
 import createHttpError from "http-errors";
 import {parsePaginationParams} from "../utils/parsePaginationParams";
+import {parseSortParams} from "../utils/parseSortParams";
 
 export const getContactController: AsyncController = async (req, res, next) => {
     const {parsedPage, parsedPerPage} = parsePaginationParams(req.query)
-
-    const data = await getContacts({parsedPage, parsedPerPage})
+    const {parsedSortBy, parsedSortOrder} = parseSortParams(req.query)
+    const data = await getContacts({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder})
     res.json({
         status: 200,
         message: "Contact were found successfully",

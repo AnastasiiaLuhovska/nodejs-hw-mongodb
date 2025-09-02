@@ -14,5 +14,7 @@ export const validationUpdateContact = Joi.object({
     phoneNumber: Joi.string().trim().pattern(/^[\+]?[\d\s\-\(\)\.]{10,18}$/),
     email: Joi.string().trim().email().lowercase(),
     isFavourite: Joi.boolean(),
-    contactType: Joi.string().valid('personal', 'home', 'work')
+    contactType: Joi.string().valid('personal', 'home', 'work'),
+    createdAt: Joi.date().iso(),
+    updatedAt: Joi.date().iso()
 })
