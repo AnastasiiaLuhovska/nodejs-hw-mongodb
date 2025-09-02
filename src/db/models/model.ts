@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import {IContact} from "../../types/types";
+import { IContactWithTimestamps} from "../../types/types";
 
 
 const schema = new Schema({
@@ -26,8 +26,10 @@ const schema = new Schema({
         default: 'personal',
         required: true
     }
+},  {
+    timestamps: true
 })
 
-const ContactCollection = mongoose.model<IContact>('Contact', schema)
+const ContactCollection = mongoose.model<IContactWithTimestamps>('Contact', schema)
 
 export default ContactCollection

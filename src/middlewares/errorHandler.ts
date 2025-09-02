@@ -7,7 +7,7 @@ const errorHandler = (e:Error, req:Request, res:Response, next:NextFunction) => 
        res.status(e.status).json({
            status: e.status,
            message: e.name,
-           data: e
+           ...(e.errors && {errors: e.errors})
        })
 
        return
