@@ -1,4 +1,4 @@
-import ContactCollection from "../db/models/model";
+import ContactCollection from "../db/models/contact";
 import {GetContacts, GetContactsById, PostContact} from "../types/types";
 import {calculatePaginationData} from "../utils/calculatePaginationData";
 
@@ -35,7 +35,7 @@ export const deleteContact = async(contactId)=>{
 }
 
 export const updateContact = async(contactId, contact) =>{
-    const data = await ContactCollection.findByIdAndUpdate({_id: contactId}, contact, {    new: true,
+    const data = await ContactCollection.findOneAndUpdate({_id: contactId}, contact, {    new: true,
         includeResultMetadata: true})
     return data
 }

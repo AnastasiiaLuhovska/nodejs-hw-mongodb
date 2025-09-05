@@ -1,10 +1,9 @@
 import {NextFunction, Request, Response} from "express";
-import {Types} from "mongoose";
+import {Types, Document} from "mongoose";
 
-// export interface CustomError extends Error {
-//     status?: number;
-//     statusCode?: number;
-// }
+export interface CustomError extends Error {
+    status?: number;
+}
 
 export interface GetEnvVar {
     (name?:string, defaultValue?:number|string): string|number
@@ -75,3 +74,13 @@ export interface CalculateFunc{
 
     }
 }
+
+export interface SessionData extends Document{
+        _id: Types.ObjectId,
+         userId: Types.ObjectId
+        accessToken: string,
+        refreshToken: string,
+        accessValidUntil: Date,
+        refreshValidUntil: Date
+}
+
