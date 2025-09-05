@@ -19,3 +19,16 @@ export const validationSchemaRegister = Joi.object({
     })
 }).required().messages({
     'any.required': 'Request body is required'})
+
+export const validationSchemaLogin = Joi.object({
+    email: Joi.string().trim().pattern(emailRegexp).required().messages({
+        'string.base': 'Email must be a string',
+        'string.pattern.base': 'Email must be a valid email address',
+        'any.required': 'Email is required'
+    }),
+    password: Joi.string().required().messages({
+        'string.base': 'Password must be a string',
+        'any.required': 'Password is required'
+    })
+}).required().messages({
+    'any.required': 'Request body is required'})
