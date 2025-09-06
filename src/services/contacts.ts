@@ -3,14 +3,14 @@ import {GetContacts, GetContactsById, PostContact} from "../types/types";
 import {calculatePaginationData} from "../utils/calculatePaginationData";
 
 export const getContactsById:GetContactsById = async(contactId, user) => {
-    const data = await ContactCollection.findOne({_id:contactId, parentId: user._id})
+    const data = await ContactCollection.findOne({_id:contactId, userId: user._id})
     return data
 
 }
 
-export const getContacts:GetContacts = async({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder, filters, parentId}) => {
+export const getContacts:GetContacts = async({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder, filters, userId}) => {
     const skip = (parsedPage - 1)*parsedPerPage
-    const contactQuery = ContactCollection.find({parentId})
+    const contactQuery = ContactCollection.find({userId})
 
     Object.entries(filters).forEach(([key, value])=> contactQuery.where(key).equals(value))
 
@@ -25,17 +25,17 @@ export const getContacts:GetContacts = async({parsedPage, parsedPerPage, parsedS
 }
 
 export const postContact:PostContact = async(contact, user)=>{
-    const data = await ContactCollection.create({...contact, parentId: user._id})
+    const data = await ContactCollection.create({...contact, userId: user._id})
     return data
 }
 
 export const deleteContact = async(contactId, user)=>{
-    const data = await ContactCollection.findOneAndDelete({_id: contactId, parentId: user._id})
+    const data = await ContactCollection.findOneAndDelete({_id: contactId, userId: user._id})
     return data
 }
 
 export const updateContact = async(contactId, user, contact) =>{
-    const data = await ContactCollection.findOneAndUpdate({_id: contactId, parentId: user._id}, contact, {    new: true,
+    const data = await ContactCollection.findOneAndUpdate({_id: contactId, userId: user._id}, contact, {    new: true,
         includeResultMetadata: true})
     return data
 }

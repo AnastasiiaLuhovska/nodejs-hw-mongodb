@@ -10,7 +10,7 @@ export const getContactController: AsyncController = async (req, res, next) => {
     const {parsedSortBy, parsedSortOrder} = parseSortParams(req.query)
     const filters = parseFilterParams(req.query)
 
-    const data = await getContacts({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder, filters, parentId: req.user._id})
+    const data = await getContacts({parsedPage, parsedPerPage, parsedSortBy, parsedSortOrder, filters, userId: req.user._id})
     res.json({
         status: 200,
         message: "Contact were found successfully",
