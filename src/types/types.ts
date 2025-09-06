@@ -1,10 +1,9 @@
 import {NextFunction, Request, Response} from "express";
-import {Types} from "mongoose";
+import {Types, Document} from "mongoose";
 
-// export interface CustomError extends Error {
-//     status?: number;
-//     statusCode?: number;
-// }
+export interface CustomError extends Error {
+    status?: number;
+}
 
 export interface GetEnvVar {
     (name?:string, defaultValue?:number|string): string|number
@@ -31,7 +30,8 @@ interface getContactsProps{
     parsedSortBy: string,
     filters: {
         [x: string]: number|boolean|string
-    }
+    },
+    parentId: Types.ObjectId
 
 }
 interface PaginationData {
@@ -51,17 +51,17 @@ export interface GetContacts {
 }
 
 export interface GetContactsById {
-    (contactId:string):Promise<IContact>
+    (contactId:string, user:User):Promise<IContact>
 }
 export interface AsyncController{
-    (req:Request, res:Response, next:NextFunction): Promise<void>
+    (req:RequestWithUserData, res:Response, next:NextFunction): Promise<void>
 }
 export interface Contact extends IContact{
     _id: Types.ObjectId
 }
 
 export interface PostContact{
-    (IContact): Promise<Contact>
+    (IContact, User): Promise<Contact>
 }
 
 export interface CalculateFunc{
@@ -74,4 +74,26 @@ export interface CalculateFunc{
         totalContacts: number
 
     }
+}
+
+export interface SessionData extends Document{
+        _id: Types.ObjectId,
+         userId: Types.ObjectId
+        accessToken: string,
+        refreshToken: string,
+        accessValidUntil: Date,
+        refreshValidUntil: Date
+}
+
+export interface User extends UserWithoutId{
+    _id: Types.ObjectId
+}
+
+export interface UserWithoutId{
+    name: string,
+    email: string,
+    password: string
+}
+export interface RequestWithUserData extends Request{
+    user: User
 }

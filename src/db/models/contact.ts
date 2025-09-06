@@ -1,5 +1,6 @@
-import mongoose, {Schema} from "mongoose";
-import { IContactWithTimestamps} from "../../types/types";
+import mongoose, {Schema, Types} from "mongoose";
+import {CustomError, IContactWithTimestamps} from "../../types/types";
+import {NextFunction} from "express";
 
 
 const schema = new Schema({
@@ -25,9 +26,24 @@ const schema = new Schema({
         enum: ['personal', 'home', 'work'],
         default: 'personal',
         required: true
+    },
+    parentId:{
+        type: Types.ObjectId,
+        required: true
     }
 },  {
     timestamps: true
+})
+
+schema.post('save', (error:CustomError, doc, next:NextFunction)=>{
+    error.status = 400
+    next()
+})
+schema.pre('findOneAndUpdate', function( doc, next:NextFunction){
+    this.setOptions({
+        runValidators: true
+    })
+    next()
 })
 
 const ContactCollection = mongoose.model<IContactWithTimestamps>('Contact', schema)
