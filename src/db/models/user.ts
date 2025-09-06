@@ -1,7 +1,5 @@
 import mongoose, {Schema} from "mongoose";
 import {emailRegexp} from "../../constants/constants";
-import {CustomError} from "../../types/types";
-import {NextFunction} from "express";
 
 const schema = new Schema({
      name:{
@@ -19,11 +17,6 @@ const schema = new Schema({
         required: true,
     }
 },
-    { timestamps: true})
-
-schema.post('save', (error:CustomError, doc, next:NextFunction)=>{
-        error.status = 400
-    next()
-})
+    { timestamps: true,  versionKey:false})
 
 export const UserCollection = mongoose.model('user', schema)

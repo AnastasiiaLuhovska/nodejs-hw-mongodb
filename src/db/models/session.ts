@@ -23,6 +23,9 @@ const schema = new Schema({
         type: Date,
         required: true
     }
+}, {
+    timestamps: true,
+    versionKey:false
 })
 
 export const SessionCollection = mongoose.model<SessionData>('session', schema)

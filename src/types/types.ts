@@ -31,7 +31,7 @@ interface getContactsProps{
     filters: {
         [x: string]: number|boolean|string
     },
-    parentId: Types.ObjectId
+    userId: Types.ObjectId
 
 }
 interface PaginationData {
