@@ -6,6 +6,7 @@ import router from "./routes/contacts";
 import errorHandler from "./middlewares/errorHandler";
 import notFoundHandler from "./middlewares/notFoundHandler";
 import authRouter from "./routes/auth";
+import cookieParser from 'cookie-parser';
 
 export const startServer = () =>{
     const app = express()
@@ -13,6 +14,8 @@ export const startServer = () =>{
     app.use(cors());
 
     app.use(express.json())
+
+    app.use(cookieParser());
 
     app.use(authRouter)
 

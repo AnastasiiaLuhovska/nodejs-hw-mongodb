@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, {Schema, Types} from "mongoose";
 import {CustomError, IContactWithTimestamps} from "../../types/types";
 import {NextFunction} from "express";
 
@@ -25,6 +25,10 @@ const schema = new Schema({
         type: String,
         enum: ['personal', 'home', 'work'],
         default: 'personal',
+        required: true
+    },
+    parentId:{
+        type: Types.ObjectId,
         required: true
     }
 },  {

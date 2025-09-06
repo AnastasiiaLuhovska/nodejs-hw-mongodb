@@ -30,7 +30,8 @@ interface getContactsProps{
     parsedSortBy: string,
     filters: {
         [x: string]: number|boolean|string
-    }
+    },
+    parentId: Types.ObjectId
 
 }
 interface PaginationData {
@@ -50,17 +51,17 @@ export interface GetContacts {
 }
 
 export interface GetContactsById {
-    (contactId:string):Promise<IContact>
+    (contactId:string, user:User):Promise<IContact>
 }
 export interface AsyncController{
-    (req:Request, res:Response, next:NextFunction): Promise<void>
+    (req:RequestWithUserData, res:Response, next:NextFunction): Promise<void>
 }
 export interface Contact extends IContact{
     _id: Types.ObjectId
 }
 
 export interface PostContact{
-    (IContact): Promise<Contact>
+    (IContact, User): Promise<Contact>
 }
 
 export interface CalculateFunc{
@@ -84,3 +85,15 @@ export interface SessionData extends Document{
         refreshValidUntil: Date
 }
 
+export interface User extends UserWithoutId{
+    _id: Types.ObjectId
+}
+
+export interface UserWithoutId{
+    name: string,
+    email: string,
+    password: string
+}
+export interface RequestWithUserData extends Request{
+    user: User
+}
