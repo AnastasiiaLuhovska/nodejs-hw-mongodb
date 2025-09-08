@@ -17,6 +17,10 @@ export const startServer = () =>{
 
     app.use(cookieParser());
 
+    app.get('/', (req, res) => {
+        res.send('Backend is running 🚀');
+    });
+
     app.use(authRouter)
 
     app.use(router)
