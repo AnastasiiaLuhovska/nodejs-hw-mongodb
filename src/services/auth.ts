@@ -95,7 +95,7 @@ export const requestResetEmail = async({email}) =>{
     })
     await sendMail({
         from: getEnvVar('BREVO_FROM'),
-        to: 'forag92643@cspaus.com',
+        to: email,
         subject: 'test',
         html
     })
