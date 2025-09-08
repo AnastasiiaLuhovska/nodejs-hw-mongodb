@@ -1,3 +1,5 @@
+import * as path from "node:path";
+
 export const SORT_ORDER = {
     asc: 'asc',
     desc: 'desc'
@@ -18,3 +20,6 @@ export const emailRegexp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{
 
 export const FIFTEEN_MIN = 15*60*1000
 export const ONE_DAY     = 24*60*60*1000
+
+
+export const TEMPLATES_PATH = path.resolve('src', 'templates')
