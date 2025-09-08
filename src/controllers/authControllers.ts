@@ -1,5 +1,13 @@
 import {AsyncController} from "../types/types";
-import {loginUser, logOutUser, refreshSession, registerUser, setupCookies} from "../services/auth";
+import {
+    loginUser,
+    logOutUser,
+    refreshSession,
+    registerUser,
+    requestResetEmail,
+    resetPassword,
+    setupCookies
+} from "../services/auth";
 
 export const registerController:AsyncController = async(req, res, next)=>{
     await registerUser(req.body)
@@ -46,4 +54,20 @@ export const logoutController:AsyncController = async(req, res, next)=>{
     res.clearCookie('refreshToken');
 
     res.status(204).send()
+}
+
+export const requestResetEmailController:AsyncController = async(req, res, next)=>{
+    await requestResetEmail(req.body)
+    res.json({
+        status:200,
+        message: 'Reset email was sent successfully'
+    })
+}
+
+export const resetPassController:AsyncController = async(req, res, next)=>{
+    await resetPassword(req.body)
+    res.json({
+        status:200,
+        message: 'Password was successfully updated'
+    })
 }
