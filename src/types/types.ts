@@ -61,7 +61,7 @@ export interface Contact extends IContact{
 }
 
 export interface PostContact{
-    (IContact, User): Promise<Contact>
+    (IContact, User, file: Express.Multer.File): Promise<Contact>
 }
 
 export interface CalculateFunc{

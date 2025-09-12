@@ -23,3 +23,6 @@ export const ONE_DAY     = 24*60*60*1000
 
 
 export const TEMPLATES_PATH = path.resolve('src', 'templates')
+
+export const TEMP_DIR = path.resolve('temp')
+export const PUBLIC_DIR = path.resolve('public')

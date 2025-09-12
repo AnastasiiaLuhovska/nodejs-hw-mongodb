@@ -1,6 +1,9 @@
 import ContactCollection from "../db/models/contact";
 import {GetContacts, GetContactsById, PostContact} from "../types/types";
 import {calculatePaginationData} from "../utils/calculatePaginationData";
+import {saveFileToPublic} from "../utils/saveFileToPublic";
+import {getEnvVar} from "../utils/getEnvVar";
+import {saveToCloudinary} from "../utils/saveToClaudinary";
 
 export const getContactsById:GetContactsById = async(contactId, user) => {
     const data = await ContactCollection.findOne({_id:contactId, userId: user._id})
@@ -24,8 +27,16 @@ export const getContacts:GetContacts = async({parsedPage, parsedPerPage, parsedS
 
 }
 
-export const postContact:PostContact = async(contact, user)=>{
-    const data = await ContactCollection.create({...contact, userId: user._id})
+export const postContact:PostContact = async(contact, user, file)=>{
+    let photo
+    if(process.env.CLOUDINARY_ENABLED){
+        photo = await saveToCloudinary(file)
+    }else{
+        if(file){
+            photo = await saveFileToPublic(file)
+        }
+    }
+    const data = await ContactCollection.create({...contact, userId: user._id, photo})
     return data
 }
 
@@ -34,8 +45,17 @@ export const deleteContact = async(contactId, user)=>{
     return data
 }
 
-export const updateContact = async(contactId, user, contact) =>{
-    const data = await ContactCollection.findOneAndUpdate({_id: contactId, userId: user._id}, contact, {    new: true,
+export const updateContact = async(contactId, user, contact, file) =>{
+    let photo
+    if(process.env.CLOUDINARY_ENABLED){
+        photo = await saveToCloudinary(file)
+    }else{
+        if(file){
+            photo = await saveFileToPublic(file)
+        }
+    }
+
+    const data = await ContactCollection.findOneAndUpdate({_id: contactId, userId: user._id, photo}, contact, {    new: true,
         includeResultMetadata: true})
     return data
 }

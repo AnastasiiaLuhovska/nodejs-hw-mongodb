@@ -10,13 +10,14 @@ import {validateBody} from "../middlewares/validateBody";
 import {validationSchemaContact, validationUpdateContact} from "../validation/contacts";
 import {validateId} from "../middlewares/validateId";
 import {authentication} from "../middlewares/authentication";
+import {upload} from "../middlewares/upload";
 
 const router = Router()
 
 router.use(authentication)
 router.get('/contacts', ctrlWrapper(getContactController))
 router.get('/contacts/:contactId', validateId, ctrlWrapper(getContactBytIdController))
-router.post('/contacts', validateBody(validationSchemaContact), ctrlWrapper(postContactController))
+router.post('/contacts', upload.single('photo'), validateBody(validationSchemaContact), ctrlWrapper(postContactController))
 router.delete('/contacts/:contactId', validateId, ctrlWrapper(deleteContactController))
-router.patch('/contacts/:contactId', validateId, validateBody(validationUpdateContact), ctrlWrapper(patchContactController))
+router.patch('/contacts/:contactId', upload.single('photo'),validateId, validateBody(validationUpdateContact), ctrlWrapper(patchContactController))
 export default router

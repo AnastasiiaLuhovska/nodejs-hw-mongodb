@@ -86,7 +86,7 @@ export const requestResetEmail = async({email}) =>{
     if(!user) throw createHttpError(404, `User ${email} was not found`)
     const secret = process.env['JWT_SECRET']
 
-    const resetToken = jwt.sign({email}, secret, {expiresIn: '1h'})
+    const resetToken = `https://frontend-domain/reset-password?token=${jwt.sign({email}, secret, {expiresIn: '1h'})}`
 
     const templateSource = await fs.readFile(path.join(TEMPLATES_PATH, 'resetPass.html'))
     const template = handlebars.compile(templateSource.toString())
@@ -95,7 +95,7 @@ export const requestResetEmail = async({email}) =>{
     })
     await sendMail({
         from: getEnvVar('BREVO_FROM'),
-        to: 'forag92643@cspaus.com',
+        to: email,
         subject: 'test',
         html
     })

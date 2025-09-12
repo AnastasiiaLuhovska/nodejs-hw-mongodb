@@ -31,7 +31,6 @@ export const loginController: AsyncController = async(req, res, next)=>{
 export const refreshController:AsyncController = async(req, res, next)=>{
         const sessionId= req.cookies.sid
         const oldRefreshToken = req.cookies.refreshToken
-        console.log(sessionId)
     const {accessToken, refreshToken, _id, refreshValidUntil}  = await refreshSession(sessionId, oldRefreshToken)
 
     setupCookies(refreshToken, _id, refreshValidUntil, res)
