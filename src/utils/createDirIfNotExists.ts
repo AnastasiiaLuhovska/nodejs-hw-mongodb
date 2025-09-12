@@ -1,0 +1,9 @@
+import fs from "fs/promises";
+
+export const createDirIfNotExists = async(path) =>{
+     try{
+         await fs.access(path)
+     }catch(e){
+         if(e.code === "ENOENT") await fs.mkdir(path)
+     }
+}

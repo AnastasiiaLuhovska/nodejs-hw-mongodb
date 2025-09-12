@@ -29,6 +29,9 @@ const schema = new Schema({
     userId:{
         type: Types.ObjectId,
         required: true
+    },
+    photo:{
+        type: String
     }
 },  {
     timestamps: true, versionKey:false

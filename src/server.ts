@@ -17,6 +17,8 @@ export const startServer = () =>{
 
     app.use(cookieParser());
 
+    app.use(express.static('public'))
+
     app.get('/', (req, res) => {
         res.send('Backend is running 🚀');
     });
