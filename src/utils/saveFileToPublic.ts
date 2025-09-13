@@ -4,7 +4,7 @@ import createHttpError from "http-errors";
 import * as path from "node:path";
 
 export const saveFileToPublic = async file =>{
-    console.log(file)
+    console.log(file.path)
     try{
         await fs.rename(file.path, path.join(PUBLIC_DIR, file.filename))
         return file.filename

@@ -10,10 +10,11 @@ import {
 } from "../services/auth";
 
 export const registerController:AsyncController = async(req, res, next)=>{
-    await registerUser(req.body)
+    const {name, email} = await registerUser(req.body)
     res.json({
         status: 201,
         message: 'User was successfully registered',
+        data : {name, email}
     })
 }
 
@@ -24,7 +25,9 @@ export const loginController: AsyncController = async(req, res, next)=>{
         res.json({
             status: 200,
             message: 'Login is successful',
-            accessToken
+            data:{
+                accessToken
+            }
         })
 }
 
@@ -35,7 +38,7 @@ export const refreshController:AsyncController = async(req, res, next)=>{
 
     setupCookies(refreshToken, _id, refreshValidUntil, res)
 
-    res.json({
+    res.status(201).json({
         status: 201,
         message: 'Token is successfully refreshed',
         accessToken
