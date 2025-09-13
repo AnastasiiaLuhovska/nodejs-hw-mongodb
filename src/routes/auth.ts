@@ -18,7 +18,7 @@ authRouter.post('/auth/register', validateBody(validationSchemaRegister), ctrlWr
 authRouter.post('/auth/login', validateBody(validationSchemaLogin), ctrlWrapper(loginController))
 authRouter.post('/auth/refresh', ctrlWrapper(refreshController))
 authRouter.post('/auth/logout', ctrlWrapper(logoutController))
-authRouter.post('/auth/request-reset-email', validateBody(requestResetSchema), ctrlWrapper(requestResetEmailController))
-authRouter.post('/auth/reset-pass', validateBody(resetPassSchema), ctrlWrapper(resetPassController))
+authRouter.post('/auth/send-reset-email', validateBody(requestResetSchema), ctrlWrapper(requestResetEmailController))
+authRouter.post('/auth/reset-password', validateBody(resetPassSchema), ctrlWrapper(resetPassController))
 
 export default authRouter

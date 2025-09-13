@@ -47,10 +47,7 @@ export const deleteContactController: AsyncController = async (req, res, next) =
         next(createHttpError(404, 'Contact was not found'))
         return
     }
-    res.json({
-        status: 204,
-        message: 'Contact was successfully deleted',
-    })
+    res.status(204).send()
 };
 
 export const patchContactController: AsyncController = async (req, res, next) => {
