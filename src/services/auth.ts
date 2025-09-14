@@ -13,6 +13,7 @@ import jwt, {JwtPayload} from 'jsonwebtoken'
 import fs from 'fs/promises';
 import * as path from "node:path";
 import * as handlebars from "handlebars";
+import {getGoogleName, validateOAuthCode} from "../utils/googleOAuth2";
 
 export const registerUser = async(userData:UserWithoutId)=>{
     const user = await UserCollection.findOne({email: userData.email})
@@ -119,4 +120,23 @@ export const resetPassword = async({password, token})=>{
     const hashedPass = await bcrypt.hash(password, 10)
 
     await UserCollection.findOneAndUpdate({email:payload.email}, {password:hashedPass})
+}
+
+export const loginWIthGoogle = async ({code})=>{
+   const loginToken = await validateOAuthCode(code)
+    const payload = loginToken.getPayload()
+    const user = await UserCollection.findOne({email: payload.email})
+
+    if(!user){
+        const password = await bcrypt.hash(randomBytes(10).toString('base64'), 10)
+        const newUser = await UserCollection.create({
+            name: getGoogleName(payload),
+            email: payload.email,
+            password
+        })
+
+       return await createSession(newUser._id)
+    }
+
+    return await createSession(user._id)
 }

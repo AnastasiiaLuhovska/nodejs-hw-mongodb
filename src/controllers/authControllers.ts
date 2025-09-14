@@ -1,6 +1,6 @@
 import {AsyncController} from "../types/types";
 import {
-    loginUser,
+    loginUser, loginWIthGoogle,
     logOutUser,
     refreshSession,
     registerUser,
@@ -8,6 +8,7 @@ import {
     resetPassword,
     setupCookies
 } from "../services/auth";
+import {generateOAuthUrl} from "../utils/googleOAuth2";
 
 export const registerController:AsyncController = async(req, res, next)=>{
     const {name, email} = await registerUser(req.body)
@@ -71,5 +72,28 @@ export const resetPassController:AsyncController = async(req, res, next)=>{
     res.json({
         status:200,
         message: 'Password was successfully updated'
+    })
+}
+
+export const getGoogleOauthController = async(req, res, next)=>{
+    const url = generateOAuthUrl()
+    res.json({
+        status: 200,
+        message: 'Google OAuth url was successfully generated',
+        data:{
+            url
+        }
+    })
+}
+
+export const loginWithGoogleOAuthController = async(req, res, next) =>{
+    const {refreshToken,  _id, refreshValidUntil, accessToken} = await loginWIthGoogle(req.body)
+    setupCookies(refreshToken, _id, refreshValidUntil, res)
+    res.json({
+        status: 200,
+        message: 'Login is successful',
+        data:{
+            accessToken
+        }
     })
 }
