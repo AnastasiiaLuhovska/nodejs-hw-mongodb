@@ -31,7 +31,8 @@ const schema = new Schema({
         required: true
     },
     photo:{
-        type: String
+        type: String,
+        required: false
     }
 },  {
     timestamps: true, versionKey:false

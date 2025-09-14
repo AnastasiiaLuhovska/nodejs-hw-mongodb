@@ -2,7 +2,6 @@ import ContactCollection from "../db/models/contact";
 import {GetContacts, GetContactsById, PostContact} from "../types/types";
 import {calculatePaginationData} from "../utils/calculatePaginationData";
 import {saveFileToPublic} from "../utils/saveFileToPublic";
-import {getEnvVar} from "../utils/getEnvVar";
 import {saveToCloudinary} from "../utils/saveToClaudinary";
 
 export const getContactsById:GetContactsById = async(contactId, user) => {
@@ -29,14 +28,16 @@ export const getContacts:GetContacts = async({parsedPage, parsedPerPage, parsedS
 
 export const postContact:PostContact = async(contact, user, file)=>{
     let photo
-    if(process.env.CLOUDINARY_ENABLED){
-        photo = await saveToCloudinary(file)
-    }else{
-        if(file){
-            photo = await saveFileToPublic(file)
+    if(file) {
+        if (process.env.CLOUDINARY_ENABLED) {
+            photo = await saveToCloudinary(file)
+        } else {
+            if (file) {
+                photo = await saveFileToPublic(file)
+            }
         }
     }
-    const data = await ContactCollection.create({...contact, userId: user._id, photo})
+    const data = await ContactCollection.create({...contact, userId: user._id, ...(photo&& {photo})})
     return data
 }
 
@@ -47,15 +48,18 @@ export const deleteContact = async(contactId, user)=>{
 
 export const updateContact = async(contactId, user, contact, file) =>{
     let photo
-    if(process.env.CLOUDINARY_ENABLED){
-        photo = await saveToCloudinary(file)
-    }else{
-        if(file){
-            photo = await saveFileToPublic(file)
+    if(file) {
+        if (process.env.CLOUDINARY_ENABLED) {
+            photo = await saveToCloudinary(file)
+        } else {
+            if (file) {
+                photo = await saveFileToPublic(file)
+            }
         }
     }
 
-    const data = await ContactCollection.findOneAndUpdate({_id: contactId, userId: user._id, photo}, contact, {    new: true,
+    const data = await ContactCollection.findOneAndUpdate({_id: contactId, userId: user._id}, {...contact, ...(photo&& {photo})}, {    new: true,
         includeResultMetadata: true})
+    console.log(data)
     return data
 }

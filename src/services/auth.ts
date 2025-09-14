@@ -22,7 +22,7 @@ export const registerUser = async(userData:UserWithoutId)=>{
 
     const password = await bcrypt.hash(userData.password, 10)
 
-   await UserCollection.create({...userData, password})
+    return await UserCollection.create({...userData, password})
 }
 
 const createSession = async (userId:Types.ObjectId)=> {
