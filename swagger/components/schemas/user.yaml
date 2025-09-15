@@ -1,0 +1,30 @@
+type: object
+required:
+  - _id
+  - name
+  - email
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    description: "User's id"
+    type: string
+    example: 65e4decdd286b30065d54af9
+  name:
+    description: "User's name"
+    type: string
+    example: 'John Doe'
+  email:
+    description: "User's email"
+    type: string
+    example: 'john.doe@example.com'
+  createdAt:
+    description: "User creation date"
+    type: string
+    format: date-time
+    example: '2024-03-04T12:30:00.000Z'
+  updatedAt:
+    description: "User last update date"
+    type: string
+    format: date-time
+    example: '2024-03-04T12:30:00.000Z'

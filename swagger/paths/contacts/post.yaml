@@ -1,0 +1,91 @@
+tags:
+  - Contacts
+summary: Create new contact
+operationId: createContact
+description: 'Create new contact'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+        properties:
+          name:
+            type: string
+            example: 'John Doe'
+            description: "Contact's name"
+          phoneNumber:
+            type: string
+            example: '+1234567890'
+            description: "Contact's phone number"
+          email:
+            type: string
+            example: 'john.doe@example.com'
+            description: "Contact's email"
+          isFavourite:
+            type: boolean
+            example: false
+            description: 'Whether the contact is favorite'
+          contactType:
+            type: string
+            enum: ['personal', 'home', 'work']
+            example: 'personal'
+            description: "Contact's type"
+          photo:
+            type: string
+            format: binary
+            description: "Contact's photo file"
+responses:
+  '201':
+    description: 'Successfully created contact'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created contact!
+            data:
+              $ref: '../../components/schemas/contact.yaml'
+  '400':
+    description: 'Bad request'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: BadRequestError
+            data:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  example: 'Validation error'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'
