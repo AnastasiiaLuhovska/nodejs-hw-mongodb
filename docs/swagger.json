@@ -1043,7 +1043,7 @@
         }
       }
     },
-    "/auth/reset-password": {
+    "/auth/reset-pwd": {
       "post": {
         "tags": [
           "Auth"
