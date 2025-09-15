@@ -24,7 +24,7 @@ export const startServer = () =>{
         res.send('Backend is running 🚀');
     });
 
-    app.use('/api-docs', swaggerDocs())
+    app.use('/api-docs', ...swaggerDocs())
 
     app.use(authRouter)
 
