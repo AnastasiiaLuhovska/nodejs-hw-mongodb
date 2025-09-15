@@ -24,6 +24,7 @@ export const startServer = () =>{
         res.send('Backend is running 🚀');
     });
 
+    app.use('/api-docs', express.static('node_modules/swagger-ui-dist'));
     app.use('/api-docs', ...swaggerDocs())
 
     app.use(authRouter)
