@@ -21,7 +21,7 @@ authRouter.post('/auth/login', validateBody(validationSchemaLogin), ctrlWrapper(
 authRouter.post('/auth/refresh', ctrlWrapper(refreshController))
 authRouter.post('/auth/logout', ctrlWrapper(logoutController))
 authRouter.post('/auth/send-reset-email', validateBody(requestResetSchema), ctrlWrapper(requestResetEmailController))
-authRouter.post('/auth/reset-password', validateBody(resetPassSchema), ctrlWrapper(resetPassController))
+authRouter.post('/auth/reset-pwd', validateBody(resetPassSchema), ctrlWrapper(resetPassController))
 authRouter.get('/auth/get-oauth-url', ctrlWrapper(getGoogleOauthController))
 authRouter.post('/auth/confirm-oauth', validateBody(googleOAuthSchema), ctrlWrapper(loginWithGoogleOAuthController))
 export default authRouter
