@@ -7,6 +7,7 @@ import errorHandler from "./middlewares/errorHandler";
 import notFoundHandler from "./middlewares/notFoundHandler";
 import authRouter from "./routes/auth";
 import cookieParser from 'cookie-parser';
+import { swaggerDocs } from './middlewares/swaggerDocs';
 
 export const startServer = () =>{
     const app = express()
@@ -22,6 +23,8 @@ export const startServer = () =>{
     app.get('/', (req, res) => {
         res.send('Backend is running 🚀');
     });
+
+    app.use('/api-docs', ...swaggerDocs());
 
     app.use(authRouter)
 

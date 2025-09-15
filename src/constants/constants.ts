@@ -26,3 +26,4 @@ export const TEMPLATES_PATH = path.resolve('src', 'templates')
 
 export const TEMP_DIR = path.resolve('temp')
 export const PUBLIC_DIR = path.resolve('public')
+export const SWAGGER_PATH = path.resolve('docs', 'swagger.json')
