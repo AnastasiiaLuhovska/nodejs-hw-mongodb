@@ -12,7 +12,7 @@ import {generateOAuthUrl} from "../utils/googleOAuth2";
 
 export const registerController:AsyncController = async(req, res, next)=>{
     const {name, email} = await registerUser(req.body)
-    res.json({
+    res.status(201).json({
         status: 201,
         message: 'User was successfully registered',
         data : {name, email}

@@ -60,6 +60,5 @@ export const updateContact = async(contactId, user, contact, file) =>{
 
     const data = await ContactCollection.findOneAndUpdate({_id: contactId, userId: user._id}, {...contact, ...(photo&& {photo})}, {    new: true,
         includeResultMetadata: true})
-    console.log(data)
     return data
 }
