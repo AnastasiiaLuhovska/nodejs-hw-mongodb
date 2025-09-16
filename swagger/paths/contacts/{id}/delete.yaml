@@ -16,6 +16,31 @@ parameters:
 responses:
   '204':
     description: 'Successfully deleted contact'
+  '400':
+    description: 'Bad request - Invalid contact ID'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: BadRequestError
+            data:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  example: Invalid contact ID format
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
