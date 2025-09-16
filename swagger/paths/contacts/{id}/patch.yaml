@@ -66,7 +66,7 @@ responses:
             data:
               $ref: '../../../components/schemas/contact.yaml'
   '400':
-    description: 'Bad request'
+    description: 'Bad request - Invalid contact ID or validation error'
     content:
       application/json:
         schema:
@@ -89,7 +89,7 @@ responses:
               properties:
                 message:
                   type: string
-                  example: 'Validation error'
+                  example: Invalid contact ID format
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':

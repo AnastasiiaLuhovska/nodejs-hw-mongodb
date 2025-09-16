@@ -186,43 +186,6 @@
               }
             }
           },
-          "400": {
-            "description": "Bad request - Invalid contact ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 400
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "BadRequestError"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "message"
-                      ],
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Invalid contact ID format"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
           "401": {
             "$ref": "#/components/responses/401"
           },
@@ -251,7 +214,8 @@
                 "type": "object",
                 "required": [
                   "name",
-                  "phoneNumber"
+                  "phoneNumber",
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -324,7 +288,7 @@
             }
           },
           "400": {
-            "description": "Bad request - Invalid contact ID or validation error",
+            "description": "Bad request",
             "content": {
               "application/json": {
                 "schema": {
@@ -351,7 +315,7 @@
                       "properties": {
                         "message": {
                           "type": "string",
-                          "example": "Invalid contact ID format or validation error"
+                          "example": "Validation error"
                         }
                       }
                     }
@@ -572,7 +536,7 @@
             }
           },
           "400": {
-            "description": "Bad request",
+            "description": "Bad request - Invalid contact ID or validation error",
             "content": {
               "application/json": {
                 "schema": {
@@ -599,7 +563,7 @@
                       "properties": {
                         "message": {
                           "type": "string",
-                          "example": "Validation error"
+                          "example": "Invalid contact ID format"
                         }
                       }
                     }
